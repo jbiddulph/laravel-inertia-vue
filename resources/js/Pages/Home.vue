@@ -24,7 +24,7 @@
               {{ user.email }}    
             </td>
             <td>
-              {{ user.created_at }}
+              {{ getDate(user.created_at) }}
             </td>
           </tr>
         </tbody>
@@ -32,13 +32,14 @@
 
       <!-- pagination links -->
       <div>
-
+        <PaginationLinks :paginator="users" />
       </div>
     </div>
   </Layout>
 </template>
 
 <script setup lang="ts">
+import PaginationLinks from "../Components/PaginationLinks.vue"
 // import Custom from "../Layouts/Custom.vue"
 
 // defineOptions({
@@ -47,6 +48,15 @@
 defineProps({
   users: Object
 })
+
+// format date
+const getDate = (date)  => 
+  new Date(date).toLocaleDateString("en-us", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
 </script>
 
 <style scoped>
