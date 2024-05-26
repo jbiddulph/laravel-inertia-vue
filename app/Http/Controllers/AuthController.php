@@ -26,7 +26,7 @@ class AuthController extends Controller
         // Login
         Auth::login($user);
         // Redirect
-        return redirect()->route('home');
+        return redirect()->route('dashboard')->with('greet', 'Welcome to the dashboard');
     }
 
     public function login(Request $request) {

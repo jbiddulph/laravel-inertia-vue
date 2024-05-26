@@ -3,6 +3,11 @@
   <meta head-key="description" name="description" content="This is teh description for Homepage" />
   <Layout>
     <div>
+      <div class="flex justify-end mb-4">
+        <div class="w-1/4">
+          <input type="search" placeholder="Search" v-model="search">
+        </div>
+      </div>
       <table>
         <thead>
           <tr class="bg-slate-300">
@@ -10,6 +15,7 @@
             <th>Name</th>
             <th>email</th>
             <th>Registration date</th>
+            <th>delete</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +32,7 @@
             <td>
               {{ getDate(user.created_at) }}
             </td>
+            <td><button class="bg-red-500 w-6 h-6 rounded-full"></button></td>
           </tr>
         </tbody>
       </table>
@@ -40,15 +47,24 @@
 
 <script setup lang="ts">
 import PaginationLinks from "../Components/PaginationLinks.vue"
+import { ref, watch } from 'vue'
+import { router } from "@inertiajs/vue3";
+import { debounce } from "lodash";
 // import Custom from "../Layouts/Custom.vue"
 
 // defineOptions({
 //   layout: Custom
 // })
-defineProps({
-  users: Object
+const props = defineProps({
+  users: Object,
+  searchTerm: String
 })
+const search = ref(props.searchTerm);
 
+watch(search, debounce(
+  (q) => router.get('/', {search: q}, {preserveState: true}),
+  500
+))
 // format date
 const getDate = (date)  => 
   new Date(date).toLocaleDateString("en-us", {
