@@ -11,7 +11,7 @@
             </span>
           </label>
           <input type="file" @input="change" id="avatar" hidden>
-          <img class="object-cover w-28 h-28" :src="form.preview ?? 'storage/avatars/default.jpg'" />
+          <img class="object-cover w-28 h-28" :src="form.preview ?? '/storage/avatars/default.jpg'" />
         </div>
         <p class="error mt-t">{{form.errors.avatar}}</p>
       </div>
